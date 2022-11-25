@@ -15,17 +15,16 @@ class ListSet(Generic[T]):
     def __init__(self, init: Iterable[T]) -> None:
         """Initialise set with init."""
         ...  # FIXME
-        self.data = init
-    #Running time = lineær/O(n)?
+        self.data = list()
+        for x in init:
+            self.add(x)
+    #Running time = kvadratisk/O(n^2) --> self.data er konstant O(1), for er lineær O(n), og self.add er lineær O(n), det giver derfor O(n^2)
 
     def __contains__(self, x: T) -> bool:
         """Test if x is in set."""
         ...  # FIXME
-        if x in self.data:
-            return True
-        else:
-            return False
-    #in-funktionen laver en lineær search og derfor Running time = lineær/O(n)
+        return x in self.data
+    #kigger hele listen igennem/laver en lineær search og derfor Running time = lineær/O(n)
 
     def __bool__(self) -> bool:
         """
@@ -35,20 +34,24 @@ class ListSet(Generic[T]):
         otherwise
         """
         ...  # FIXME
-        return bool(self)
-    #bool-funktionen har Running time = konstant/O(1)?
+        return bool(self.data)
+    #bool-funktionen har Running time = konstant/O(1)
+
+    def __str__(self) -> str:
+        """ ~ Pretty print ~ """
+        return str(self.data)
+    #str-frunktion har Running time = lineær/O(n)
 
     def add(self, x: T) -> None:
         """Add x to the set."""
         ...  # FIXME
-        if x not in self:
+        if x not in self.data:
             self.data.append(x)
-    #not in-funktionen lineær search mens append har konstant kompleksitet, altså Running time = lineær/O(n)?
+    #not in-funktionen lineær search mens append har konstant kompleksitet, altså Running time = lineær/O(n)
 
     def remove(self, x: T) -> None:
         """Remove x from the set."""
         ...  # FIXME
-        if x in self:
-            idx = self.data.index(x)
-            self.data.pop(idx)
-    #in-funktioner laver lineær search, og pop-funktionen skal rykke alle elementer efter idx, så Running time = kvadratisk/O(n^2)?
+        if x in self.data:
+            self.data.remove(x)
+    #Running time lineær/O(n) --> Searching har Running time O(n), Remove har Running time O(n) og de skal lægges sammen og ikke ganges.
